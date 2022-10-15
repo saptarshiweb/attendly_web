@@ -1,7 +1,9 @@
 import 'package:attendly_web/color_constants.dart';
+import 'package:attendly_web/custom_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
+import 'package:fluttericon/typicons_icons.dart';
 import 'package:lottie/lottie.dart';
 import 'package:pretty_qr_code/pretty_qr_code.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
@@ -53,41 +55,76 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
+  Widget qrwidget() {
+    return customcontainer(
+      Padding(
+        padding: const EdgeInsets.all(8.0),
+        child: PrettyQr(
+          typeNumber: 3,
+          size: 200,
+          data: 'helloworld',
+          roundEdges: true,
+        ),
+      ),
+    );
+  }
+
   Widget rightwidget() {
     return Container(
       decoration: BoxDecoration(
           border: Border.all(width: 2, color: t2),
           borderRadius: BorderRadius.circular(20)),
       child: Padding(
-        padding: const EdgeInsets.all(10.0),
+        padding:
+            const EdgeInsets.only(left: 10, right: 10, top: 10, bottom: 50),
         child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
           children: [
-            Container(
-              decoration: BoxDecoration(
-                  color: Colors.grey.shade200,
-                  border: Border.all(width: 2, color: t2),
-                  borderRadius: BorderRadius.circular(12)),
-              child: Padding(
-                padding: const EdgeInsets.all(12.0),
-                child: Container(
-                  decoration: BoxDecoration(boxShadow: [
-                    BoxShadow(
-                        color: Colors.grey.shade300,
-                        offset: const Offset(-5, 2),
-                        blurRadius: 2,
-                        spreadRadius: 3)
-                  ], color: t2, borderRadius: BorderRadius.circular(10)),
-                  child: Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: PrettyQr(
-                      typeNumber: 3,
-                      size: 200,
-                      data: 'helloworld',
-                      roundEdges: true,
+            qrwidget(),
+            Padding(
+              padding: const EdgeInsets.only(left: 17, right: 17),
+              child: customcontainer(Row(
+                children: [
+                  Expanded(
+                    child: Padding(
+                      padding: const EdgeInsets.all(14.0),
+                      child: Row(
+                        mainAxisAlignment: MainAxisAlignment.center,
+                        children: [
+                          Text(
+                            'GDSC Info Session ',
+                            style: TextStyle(
+                                color: t1,
+                                fontSize: 18,
+                                fontWeight: FontWeight.bold),
+                          ),
+                          Icon(
+                            FontAwesome.rocket,
+                            color: col,
+                            size: 28,
+                          )
+                        ],
+                      ),
                     ),
                   ),
+                ],
+              )),
+            ),
+            Column(
+              mainAxisAlignment: MainAxisAlignment.center,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Text(
+                  'Scan QR to register',
+                  style: TextStyle(
+                      color: t1, fontSize: 22, fontWeight: FontWeight.w900),
                 ),
-              ),
+                Text(
+                  'Attendance',
+                  style: TextStyle(
+                      color: t1, fontSize: 22, fontWeight: FontWeight.bold),
+                )
+              ],
             ),
           ],
         ),
@@ -156,34 +193,103 @@ Widget techstackbar() {
 }
 
 Widget left1() {
-  return Container(
-    child: Column(
-      children: [
-        Lottie.asset('gdsclogo.json'),
-        const SizedBox(height: 30),
-        Expanded(child: techstackbar()),
-      ],
-    ),
+  return Column(
+    children: [
+      SizedBox(
+        height: 100,
+        child: Lottie.network(
+            'https://assets3.lottiefiles.com/private_files/lf30_um4sz3z5.json'),
+      ),
+      const SizedBox(height: 30),
+      Expanded(child: techstackbar()),
+    ],
   );
 }
 
+Widget credit() {
+  return customcontainer(Padding(
+    padding: const EdgeInsets.all(14.0),
+    child: Row(
+      children: [
+        Text(
+          'Made with ',
+          style:
+              TextStyle(color: t1, fontSize: 14, fontWeight: FontWeight.bold),
+        ),
+        Text(
+          'Flutter ',
+          style: TextStyle(
+              color: Colors.blueAccent.shade400,
+              fontSize: 16,
+              fontWeight: FontWeight.bold),
+        ),
+        const FlutterLogo(
+          size: 24,
+        ),
+        const SizedBox(width: 20),
+        Text(
+          '•',
+          style:
+              TextStyle(color: col, fontSize: 16, fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(width: 20),
+        Icon(
+          FontAwesome5.copyright,
+          color: t1,
+          size: 24,
+        ),
+        const SizedBox(width: 8),
+        Text(
+          'Copyright',
+          style:
+              TextStyle(color: col, fontSize: 16, fontWeight: FontWeight.bold),
+        ),
+        const SizedBox(width: 10),
+        Text(
+          '• Google Developer Student Clubs KGEC',
+          style:
+              TextStyle(color: t1, fontSize: 17, fontWeight: FontWeight.bold),
+        ),
+      ],
+    ),
+  ));
+}
+
 Widget left2() {
-  return Container(
+  return Padding(
+    padding: const EdgeInsets.only(bottom: 10),
     child: Column(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         Row(
           children: [
             GradientText(
-              'Welcome to Attendly! ',
+              'Welcome to Attendly ',
               colors: [col, Colors.deepPurpleAccent.shade700],
               style: const TextStyle(fontSize: 34, fontWeight: FontWeight.bold),
             ),
-            Icon(
-              FontAwesome5.autoprefixer,
-              size: 28,
-              color: col,
+            SizedBox(
+                height: 80,
+                child: Lottie.network(
+                    'https://assets2.lottiefiles.com/packages/lf20_221k5lrw.json')),
+            const SizedBox(width: 20),
+            Expanded(
+              child: customcontainer(Padding(
+                padding: const EdgeInsets.all(14.0),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Text(
+                      'Attendee ',
+                      style: TextStyle(
+                          color: t1, fontSize: 14, fontWeight: FontWeight.bold),
+                    ),
+                    Icon(Typicons.right_open, color: t1, size: 18)
+                  ],
+                ),
+              )),
             ),
+            const SizedBox(width: 20),
           ],
         ),
         ClipRRect(
@@ -195,7 +301,9 @@ Widget left2() {
               image: AssetImage(
                 'assets/gdsc_white.png',
               )),
-        )
+        ),
+        const SizedBox(height: 20),
+        credit()
       ],
     ),
   );
