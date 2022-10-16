@@ -48,7 +48,7 @@ class _HomePageState extends State<HomePage> {
         mainAxisAlignment: MainAxisAlignment.start,
         children: [
           Expanded(flex: 1, child: left1()),
-          const SizedBox(width: 20),
+          // const SizedBox(width: 20),
           Expanded(flex: 4, child: left2()),
         ],
       ),
@@ -136,7 +136,7 @@ class _HomePageState extends State<HomePage> {
 Icon ic(IconData icon) {
   return Icon(
     icon,
-    color: col,
+    color: t1,
     size: 24,
   );
 }
@@ -155,14 +155,25 @@ Widget techstackbar() {
           decoration: BoxDecoration(
             color: t2,
             boxShadow: [
+              // BoxShadow(
+              //     color: Colors.grey.shade300,
+              //     offset: const Offset(2, 2),
+              //     blurRadius: 2,
+              //     spreadRadius: 3),
+              // BoxShadow(
+              //     color: Colors.grey.shade300,
+              //     offset: const Offset(-2, 2),
+              //     blurRadius: 2,
+              //     spreadRadius: 3)
+
               BoxShadow(
                   color: Colors.grey.shade300,
-                  offset: const Offset(2, 2),
+                  offset: const Offset(-5, 2),
                   blurRadius: 2,
                   spreadRadius: 3),
               BoxShadow(
                   color: Colors.grey.shade300,
-                  offset: const Offset(-2, 2),
+                  offset: const Offset(2, -5),
                   blurRadius: 2,
                   spreadRadius: 3)
             ],
@@ -246,7 +257,7 @@ Widget credit() {
         ),
         const SizedBox(width: 10),
         Text(
-          '• Google Developer Student Clubs KGEC',
+          '•   Google Developer Student Clubs KGEC   •',
           style:
               TextStyle(color: t1, fontSize: 17, fontWeight: FontWeight.bold),
         ),
@@ -274,20 +285,27 @@ Widget left2() {
                     'https://assets2.lottiefiles.com/packages/lf20_221k5lrw.json')),
             const SizedBox(width: 20),
             Expanded(
-              child: customcontainer(Padding(
-                padding: const EdgeInsets.all(14.0),
-                child: Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Text(
-                      'Attendee ',
-                      style: TextStyle(
-                          color: t1, fontSize: 14, fontWeight: FontWeight.bold),
+              child: Container(
+                  decoration: BoxDecoration(
+                    color: t2,
+                    borderRadius: BorderRadius.circular(10),
+                  ),
+                  child: Padding(
+                    padding: const EdgeInsets.all(14.0),
+                    child: Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Text(
+                          'Attendee ',
+                          style: TextStyle(
+                              color: t1,
+                              fontSize: 14,
+                              fontWeight: FontWeight.bold),
+                        ),
+                        Icon(Typicons.right_open, color: t1, size: 18)
+                      ],
                     ),
-                    Icon(Typicons.right_open, color: t1, size: 18)
-                  ],
-                ),
-              )),
+                  )),
             ),
             const SizedBox(width: 20),
           ],
