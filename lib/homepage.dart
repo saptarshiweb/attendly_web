@@ -92,7 +92,7 @@ class _HomePageState extends State<HomePage> {
                         mainAxisAlignment: MainAxisAlignment.center,
                         children: [
                           Text(
-                            'GDSC Info Session ',
+                            'GDSC Orientation ',
                             style: TextStyle(
                                 color: t1,
                                 fontSize: 18,
