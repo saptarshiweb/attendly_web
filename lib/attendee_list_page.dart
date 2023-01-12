@@ -4,10 +4,9 @@ import 'package:attendly_web/homepage.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
+import 'package:fluttericon/typicons_icons.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-
-import 'package:line_icons/line_icons.dart';
 
 class AttendeeList extends StatefulWidget {
   const AttendeeList({super.key});
@@ -63,6 +62,8 @@ class _AttendeeListState extends State<AttendeeList> {
             children: [
               Row(
                 children: [
+                  Icon(FontAwesome5.phoenix_squadron, color: a2, size: 22),
+                  const SizedBox(width: 15),
                   Text(
                     'Attendee List  ',
                     style: TextStyle(
@@ -94,12 +95,13 @@ class _AttendeeListState extends State<AttendeeList> {
                       },
                       style: ElevatedButton.styleFrom(backgroundColor: t2),
                       child: Padding(
-                        padding: const EdgeInsets.all(2.0),
+                        padding: const EdgeInsets.only(
+                            left: 2, right: 2, top: 14, bottom: 14),
                         child: Row(
                           children: [
-                            Icon(LineIcons.arrowCircleLeft,
+                            Icon(Typicons.left_open_outline,
                                 color: t1, size: 18),
-                            const SizedBox(width: 8),
+                            const SizedBox(width: 14),
                             Text(
                               'Back',
                               style: TextStyle(
@@ -113,10 +115,20 @@ class _AttendeeListState extends State<AttendeeList> {
                 ],
               ),
               const SizedBox(height: 20),
-              Text(
-                '''See who's attending the event !''',
-                style: TextStyle(
-                    color: a2, fontSize: 24, fontWeight: FontWeight.bold),
+              Row(
+                children: [
+                  Icon(
+                    FontAwesome5.list_ul,
+                    color: a1,
+                    size: 24,
+                  ),
+                  const SizedBox(width: 9),
+                  Text(
+                    '''See who's attending the event !!!''',
+                    style: TextStyle(
+                        color: a2, fontSize: 24, fontWeight: FontWeight.bold),
+                  ),
+                ],
               ),
               const SizedBox(height: 20),
               Row(
@@ -168,7 +180,7 @@ class _AttendeeListState extends State<AttendeeList> {
               ),
               const SizedBox(height: 20),
               SizedBox(
-                height: 370,
+                height: 350,
                 child: FutureBuilder(
                   future: getRequest(),
                   builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -215,7 +227,7 @@ class _AttendeeListState extends State<AttendeeList> {
       onPressed: () {},
       style: ElevatedButton.styleFrom(backgroundColor: t2),
       child: Padding(
-        padding: const EdgeInsets.only(top: 10, bottom: 10),
+        padding: const EdgeInsets.only(top: 18, bottom: 18),
         child: Row(
           children: [
             Expanded(
@@ -243,7 +255,7 @@ class _AttendeeListState extends State<AttendeeList> {
               ),
             ),
             Expanded(
-              flex: fval,
+              flex: fval - 1,
               child: Text(
                 'Offline',
                 style: TextStyle(
@@ -259,7 +271,7 @@ class _AttendeeListState extends State<AttendeeList> {
               ),
             ),
             Expanded(
-              flex: fval,
+              flex: fval - 1,
               child: Text(
                 time,
                 style: TextStyle(
@@ -267,7 +279,7 @@ class _AttendeeListState extends State<AttendeeList> {
               ),
             ),
             Expanded(
-              flex: fval,
+              flex: fval - 1,
               child: Text(
                 '06:00 PM',
                 style: TextStyle(
@@ -277,7 +289,7 @@ class _AttendeeListState extends State<AttendeeList> {
             Expanded(
                 flex: fval - 2,
                 child: Icon(
-                  Icons.menu,
+                  FontAwesome5.share_alt,
                   color: t1,
                   size: 18,
                 )),
@@ -315,7 +327,7 @@ class _AttendeeListState extends State<AttendeeList> {
           ),
         ),
         Expanded(
-          flex: fval,
+          flex: fval - 1,
           child: Text(
             'Event Type',
             style:
@@ -331,7 +343,7 @@ class _AttendeeListState extends State<AttendeeList> {
           ),
         ),
         Expanded(
-          flex: fval,
+          flex: fval - 1,
           child: Text(
             'Start At',
             style:
@@ -339,7 +351,7 @@ class _AttendeeListState extends State<AttendeeList> {
           ),
         ),
         Expanded(
-          flex: fval,
+          flex: fval - 1,
           child: Text(
             'End At',
             style:

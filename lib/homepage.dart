@@ -1,10 +1,10 @@
 import 'package:attendly_web/attendee_list_page.dart';
-import 'package:attendly_web/attendee_model.dart';
 import 'package:attendly_web/color_constants.dart';
 import 'package:attendly_web/custom_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
+import 'package:fluttericon/typicons_icons.dart';
 import 'package:lottie/lottie.dart';
 import 'package:pretty_qr_code/pretty_qr_code.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
@@ -20,15 +20,15 @@ class _HomePageState extends State<HomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: accent,
+      backgroundColor: Colors.transparent,
       appBar: AppBar(
         elevation: 0,
         toolbarHeight: 0,
       ),
       body: Container(
-        decoration: BoxDecoration(
-          border: Border.all(width: 5, color: t2),
-        ),
+        decoration: BoxDecoration(color: Colors.orangeAccent.shade100
+            // border: Border.all(width: 5, color: t2),
+            ),
         child: Padding(
           padding: const EdgeInsets.all(8.0),
           child: Row(
@@ -286,38 +286,70 @@ Widget left2(BuildContext context) {
                     'https://assets2.lottiefiles.com/packages/lf20_221k5lrw.json')),
             const SizedBox(width: 20),
             Expanded(
-              child: ElevatedButton(
-                  onPressed: () {
-                    //navigate to attendee List
-                     Navigator.push(  
-    context,  
-    MaterialPageRoute(builder: (context) => AttendeeList()),  
-  );  
-                  },
-                  style: ElevatedButton.styleFrom(
-                      backgroundColor: Colors.grey.shade100),
-                  // decoration: BoxDecoration(
-                  //   color: t2,
-                  //   borderRadius: BorderRadius.circular(10),
-                  // ),
-                  child: Padding(
-                    padding: const EdgeInsets.all(14.0),
-                    child: Row(
-                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                      children: [
-                        Icon(FontAwesome.list_alt, color: t1, size: 18),
-                        Text(
-                          'Attendee List ',
-                          style: TextStyle(
-                              color: t1,
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold),
-                        ),
-                        Icon(Icons.arrow_circle_right_outlined,
-                            color: t1, size: 22)
-                      ],
-                    ),
-                  )),
+              child: Container(
+                child: Row(
+                  children: [
+                    ElevatedButton(
+                        onPressed: () {
+                          //navigate to attendee List
+                          Navigator.push(
+                            context,
+                            MaterialPageRoute(
+                                builder: (context) => const AttendeeList()),
+                          );
+                        },
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.grey.shade100),
+                        // decoration: BoxDecoration(
+                        //   color: t2,
+                        //   borderRadius: BorderRadius.circular(10),
+                        // ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Row(
+                            children: [
+                              Text(
+                                'Attendee List   ',
+                                style: TextStyle(
+                                    color: t1,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              Icon(Typicons.right_open_outline,
+                                  color: t1, size: 15)
+                            ],
+                          ),
+                        )),
+                    const SizedBox(width: 8),
+                    ElevatedButton(
+                        onPressed: () {
+                          //navigate to attendee List
+                        },
+                        style: ElevatedButton.styleFrom(
+                            backgroundColor: Colors.grey.shade100),
+                        // decoration: BoxDecoration(
+                        //   color: t2,
+                        //   borderRadius: BorderRadius.circular(10),
+                        // ),
+                        child: Padding(
+                          padding: const EdgeInsets.all(10.0),
+                          child: Row(
+                            children: [
+                              Text(
+                                'Invite   ',
+                                style: TextStyle(
+                                    color: t1,
+                                    fontSize: 12,
+                                    fontWeight: FontWeight.bold),
+                              ),
+                              Icon(Typicons.user_add_outline,
+                                  color: t1, size: 15)
+                            ],
+                          ),
+                        )),
+                  ],
+                ),
+              ),
             ),
             const SizedBox(width: 20),
           ],

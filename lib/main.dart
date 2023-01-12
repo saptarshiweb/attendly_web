@@ -1,4 +1,4 @@
-import 'package:attendly_web/attendee_list_page.dart';
+import 'package:attendly_web/homepage.dart';
 import 'package:flutter/material.dart';
 
 void main() {
@@ -15,7 +15,7 @@ class MyApp extends StatelessWidget {
       title: 'Attendly Web',
       debugShowCheckedModeBanner: false,
       theme: ThemeData(fontFamily: 'lato'),
-      home: const AttendeeList(),
+      home: const HomePage(),
     );
   }
 }
