@@ -42,6 +42,8 @@ dependencies:
   carbon_icons: ^0.0.1+2
   line_icons: ^2.0.1
   simple_gradient_text: ^1.2.4
+  simple_shadow: ^0.3.0
+  http: ^0.13.5
   
 
 dev_dependencies:

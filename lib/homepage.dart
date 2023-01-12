@@ -1,9 +1,10 @@
+import 'package:attendly_web/attendee_list_page.dart';
+import 'package:attendly_web/attendee_model.dart';
 import 'package:attendly_web/color_constants.dart';
 import 'package:attendly_web/custom_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
 import 'package:fluttericon/font_awesome_icons.dart';
-import 'package:fluttericon/typicons_icons.dart';
 import 'package:lottie/lottie.dart';
 import 'package:pretty_qr_code/pretty_qr_code.dart';
 import 'package:simple_gradient_text/simple_gradient_text.dart';
@@ -32,7 +33,7 @@ class _HomePageState extends State<HomePage> {
           padding: const EdgeInsets.all(8.0),
           child: Row(
             children: [
-              Expanded(flex: 3, child: leftwidget()),
+              Expanded(flex: 3, child: leftwidget(context)),
               Expanded(flex: 1, child: rightwidget()),
             ],
           ),
@@ -41,7 +42,7 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-  Widget leftwidget() {
+  Widget leftwidget(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(16.0),
       child: Row(
@@ -49,7 +50,7 @@ class _HomePageState extends State<HomePage> {
         children: [
           Expanded(flex: 1, child: left1()),
           // const SizedBox(width: 20),
-          Expanded(flex: 4, child: left2()),
+          Expanded(flex: 4, child: left2(context)),
         ],
       ),
     );
@@ -266,7 +267,7 @@ Widget credit() {
   ));
 }
 
-Widget left2() {
+Widget left2(BuildContext context) {
   return Padding(
     padding: const EdgeInsets.only(bottom: 10),
     child: Column(
@@ -285,24 +286,35 @@ Widget left2() {
                     'https://assets2.lottiefiles.com/packages/lf20_221k5lrw.json')),
             const SizedBox(width: 20),
             Expanded(
-              child: Container(
-                  decoration: BoxDecoration(
-                    color: t2,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
+              child: ElevatedButton(
+                  onPressed: () {
+                    //navigate to attendee List
+                     Navigator.push(  
+    context,  
+    MaterialPageRoute(builder: (context) => AttendeeList()),  
+  );  
+                  },
+                  style: ElevatedButton.styleFrom(
+                      backgroundColor: Colors.grey.shade100),
+                  // decoration: BoxDecoration(
+                  //   color: t2,
+                  //   borderRadius: BorderRadius.circular(10),
+                  // ),
                   child: Padding(
                     padding: const EdgeInsets.all(14.0),
                     child: Row(
-                      mainAxisAlignment: MainAxisAlignment.center,
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
+                        Icon(FontAwesome.list_alt, color: t1, size: 18),
                         Text(
-                          'Attendee ',
+                          'Attendee List ',
                           style: TextStyle(
                               color: t1,
                               fontSize: 14,
                               fontWeight: FontWeight.bold),
                         ),
-                        Icon(Typicons.right_open, color: t1, size: 18)
+                        Icon(Icons.arrow_circle_right_outlined,
+                            color: t1, size: 22)
                       ],
                     ),
                   )),
