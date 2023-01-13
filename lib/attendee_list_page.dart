@@ -265,7 +265,7 @@ class _AttendeeListState extends State<AttendeeList> {
             Expanded(
               flex: fval,
               child: Text(
-                'Seminal Hall, North Block',
+                'Seminar Hall, North Block',
                 style: TextStyle(
                     color: t1, fontSize: 12, fontWeight: FontWeight.bold),
               ),
