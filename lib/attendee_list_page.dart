@@ -1,9 +1,9 @@
 import 'package:attendly_web/attendee_model.dart';
 import 'package:attendly_web/color_constants.dart';
+import 'package:attendly_web/custom_widget.dart';
 import 'package:attendly_web/homepage.dart';
 import 'package:flutter/material.dart';
 import 'package:fluttericon/font_awesome5_icons.dart';
-import 'package:fluttericon/font_awesome_icons.dart';
 import 'package:fluttericon/typicons_icons.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
@@ -16,17 +16,137 @@ class AttendeeList extends StatefulWidget {
 }
 
 class _AttendeeListState extends State<AttendeeList> {
+  TextEditingController eventname = TextEditingController();
+  TextEditingController eventtime = TextEditingController();
+  TextEditingController eventdate = TextEditingController();
+  TextEditingController eventvenue = TextEditingController();
+  TextEditingController eventdescription = TextEditingController();
+  TextEditingController eventattendance = TextEditingController();
+  TextEditingController eventstart = TextEditingController();
+  TextEditingController eventend = TextEditingController();
+  TextEditingController eventID = TextEditingController();
+
   // ignore: non_constant_identifier_names
   int total_attendee = 0;
+  // ignore: non_constant_identifier_names
+  bool new_event = false;
+
+  String global_event_id = '';
+  double eventBox = 300;
+
+  clearTextInput() {
+    eventname.clear();
+    eventtime.clear();
+    eventdate.clear();
+    eventvenue.clear();
+    eventdescription.clear();
+    eventattendance.clear();
+    eventstart.clear();
+    eventend.clear();
+    eventID.clear();
+  }
+
+  resetEvent() async {
+    setState(() {
+      eventBox = 0;
+    });
+    changeEvent();
+  }
+
+  changeEvent() async {
+    setState(() {
+      eventBox = 300;
+    });
+  }
+
+  //Add an event
+  Future addevent() async {
+    String url = "https://attendly-backend.vercel.app/api/event/add";
+    // ignore: unused_local_variable
+    final response = await http.post(
+      Uri.parse(url),
+      headers: <String, String>{
+        'Content-Type': 'application/json; charset=UTF-8',
+      },
+      body: jsonEncode(<String, String>{
+        'name': eventname.text,
+        'des': eventdescription.text,
+        'attendance': '0',
+        'eventid': eventID.text,
+        'mode': 'Offline',
+        'date': eventdate.text,
+        'start': eventstart.text,
+        'end': eventend.text,
+        'venue': eventvenue.text,
+      }),
+    );
+
+    clearTextInput();
+  }
+
+  Future<void> _showMyDialog() async {
+    return showDialog<void>(
+      context: context,
+      barrierDismissible: false, // user must tap button!
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: Colors.grey.shade200,
+          title: Row(
+            children: [
+              Text(
+                'Create Event',
+                style: TextStyle(
+                    color: a2, fontSize: 19, fontWeight: FontWeight.bold),
+              ),
+              const Spacer(),
+              IconButton(
+                  onPressed: () {
+                    Navigator.of(context).pop();
+                  },
+                  icon: Icon(Icons.cancel_rounded,
+                      color: Colors.redAccent.shade700, size: 24))
+            ],
+          ),
+          content: SizedBox(
+              height: 150,
+              width: 200,
+              child: SingleChildScrollView(child: neweventbox())),
+          actions: <Widget>[
+            TextButton(
+              child: const Text('Confirm'),
+              onPressed: () {
+                addevent();
+                Navigator.of(context).pop();
+              },
+            ),
+            TextButton(
+              child: Text(
+                'Cancel',
+                style: TextStyle(color: Colors.redAccent.shade700),
+              ),
+              onPressed: () {
+                Navigator.of(context).pop();
+              },
+            ),
+          ],
+        );
+      },
+    );
+  }
+
+  //get Attendee List
   Future<List<Attendee>> getRequest() async {
     //replace your restFull API here.
-    String url = "https://attendly-backend.vercel.app/api/attendee/list";
+    List<Attendee> alist = [];
+    alist.clear();
+    String url =
+        "https://attendly-backend.vercel.app/api/attendee/list/$global_event_id";
     final response = await http.get(Uri.parse(url));
 
     var responseData = json.decode(response.body);
 
     //Creating a list to store input data;
-    List<Attendee> alist = [];
+
     for (var singleUser in responseData) {
       Attendee attendee = Attendee(
           name: singleUser["name"],
@@ -56,9 +176,9 @@ class _AttendeeListState extends State<AttendeeList> {
         ], begin: Alignment.topLeft, end: Alignment.bottomRight)),
         child: Padding(
           padding: const EdgeInsets.only(top: 40, left: 40, right: 40),
-          child: Column(
-            mainAxisAlignment: MainAxisAlignment.start,
-            crossAxisAlignment: CrossAxisAlignment.start,
+          child: ListView(
+            // mainAxisAlignment: MainAxisAlignment.start,
+            // crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               Row(
                 children: [
@@ -134,53 +254,40 @@ class _AttendeeListState extends State<AttendeeList> {
               Row(
                 children: [
                   ElevatedButton(
-                      onPressed: () {},
+                      onPressed: () async {
+                        setState(() {
+                          global_event_id = '1234'; resetEvent();
+                          _showMyDialog();
+                         
+                        });
+                      },
                       style: ElevatedButton.styleFrom(backgroundColor: a2),
                       child: Padding(
                         padding: const EdgeInsets.all(14.0),
                         child: Row(
                           children: [
                             Text(
-                              'New Event     ',
+                              'New Event   ',
                               style: TextStyle(
                                   color: t2,
                                   fontSize: 12,
                                   fontWeight: FontWeight.bold),
                             ),
-                            Icon(Icons.new_label_outlined, color: t2, size: 18),
                           ],
                         ),
                       )),
                   const SizedBox(width: 20),
-                  ElevatedButton(
-                      onPressed: () {},
-                      style: ElevatedButton.styleFrom(backgroundColor: t2),
-                      child: Padding(
-                        padding: const EdgeInsets.all(14.0),
-                        child: Row(
-                          children: [
-                            Text(
-                              'Event Actions     ',
-                              style: TextStyle(
-                                  color: t1,
-                                  fontSize: 12,
-                                  fontWeight: FontWeight.bold),
-                            ),
-                            Icon(FontAwesome.down_circled2,
-                                color: t1, size: 18),
-                          ],
-                        ),
-                      ))
                 ],
               ),
               const SizedBox(height: 20),
+              
               Padding(
                 padding: const EdgeInsets.only(left: 8),
                 child: headingwidget(),
               ),
               const SizedBox(height: 20),
               SizedBox(
-                height: 350,
+                height: eventBox,
                 child: FutureBuilder(
                   future: getRequest(),
                   builder: (BuildContext context, AsyncSnapshot snapshot) {
@@ -188,12 +295,7 @@ class _AttendeeListState extends State<AttendeeList> {
                       return Container(
                         child: Padding(
                           padding: const EdgeInsets.only(top: 40),
-                          child: Center(
-                            child: CircularProgressIndicator(
-                              color: a1,
-                              backgroundColor: a2,
-                            ),
-                          ),
+                          child: Center(child: loadingwidget()),
                         ),
                       );
                     } else {
@@ -215,8 +317,124 @@ class _AttendeeListState extends State<AttendeeList> {
                   },
                 ),
               ),
+              const SizedBox(height: 20),
             ],
           ),
+        ),
+      ),
+    );
+  }
+
+  Widget neweventbox() {
+    return ElevatedButton(
+      onPressed: () {},
+      style: ElevatedButton.styleFrom(backgroundColor: Colors.white),
+      child: Padding(
+        padding: const EdgeInsets.only(top: 15, bottom: 8),
+        child: Column(
+          children: [
+            const SizedBox(height: 5),
+            TextFormField(
+              controller: eventname,
+              maxLines: 1,
+              decoration: InputDecoration(
+                enabled: true,
+                disabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: a2, width: 0.9),
+                  borderRadius: const BorderRadius.all(Radius.circular(2.0)),
+                ),
+                labelText: 'Event Name',
+              ),
+            ),
+            TextFormField(
+              controller: eventID,
+              maxLines: 1,
+              decoration: InputDecoration(
+                enabled: true,
+                disabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: a2, width: 0.9),
+                  borderRadius: const BorderRadius.all(Radius.circular(2.0)),
+                ),
+                labelText: 'Event ID',
+              ),
+            ),
+            TextFormField(
+              controller: eventdescription,
+              maxLines: 3,
+              minLines: 2,
+              decoration: InputDecoration(
+                enabled: true,
+                disabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: a2, width: 0.9),
+                  borderRadius: const BorderRadius.all(Radius.circular(2.0)),
+                ),
+                labelText: 'Event Description',
+              ),
+            ),
+            TextFormField(
+              controller: eventdate,
+              maxLines: 1,
+              decoration: InputDecoration(
+                enabled: true,
+                disabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: a2, width: 0.9),
+                  borderRadius: const BorderRadius.all(Radius.circular(2.0)),
+                ),
+                labelText: 'Event Date',
+              ),
+            ),
+            TextFormField(
+              controller: eventtime,
+              maxLines: 1,
+              decoration: InputDecoration(
+                enabled: true,
+                disabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: a2, width: 0.9),
+                  borderRadius: const BorderRadius.all(Radius.circular(2.0)),
+                ),
+                labelText: 'Event Time',
+              ),
+            ),
+
+            TextFormField(
+              controller: eventvenue,
+              maxLines: 1,
+              decoration: InputDecoration(
+                enabled: true,
+                disabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: a2, width: 0.9),
+                  borderRadius: const BorderRadius.all(Radius.circular(2.0)),
+                ),
+                labelText: 'Event Venue',
+              ),
+            ),
+            TextFormField(
+              controller: eventstart,
+              maxLines: 1,
+              decoration: InputDecoration(
+                enabled: true,
+                disabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: a2, width: 0.9),
+                  borderRadius: const BorderRadius.all(Radius.circular(2.0)),
+                ),
+                labelText: 'Start At',
+              ),
+            ),
+            TextFormField(
+              controller: eventend,
+              maxLines: 1,
+              decoration: InputDecoration(
+                enabled: true,
+                disabledBorder: OutlineInputBorder(
+                  borderSide: BorderSide(color: a2, width: 0.9),
+                  borderRadius: const BorderRadius.all(Radius.circular(2.0)),
+                ),
+                labelText: 'End At',
+              ),
+            ),
+
+            //startat
+          ],
         ),
       ),
     );

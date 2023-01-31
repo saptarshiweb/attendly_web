@@ -22,3 +22,10 @@ Widget customcontainer(Widget widget) {
     ),
   );
 }
+
+Widget loadingwidget() {
+  return CircularProgressIndicator(
+    color: a1,
+    backgroundColor: a2,
+  );
+}

@@ -44,6 +44,7 @@ dependencies:
   simple_gradient_text: ^1.2.4
   simple_shadow: ^0.3.0
   http: ^0.13.5
+  animated_custom_dropdown: ^1.4.0
   
 
 dev_dependencies:
